@@ -18,8 +18,8 @@ services:
       pflege_accounting_network:
         ipv4_address: 145.0.0.2
     environment:
-      POSTGRES_USER: "CARRENTAL_ADMIN"
-      POSTGRES_PASSWORD: "CARRENTAL_LOCAL"
+      POSTGRES_USER: "CAR_RENTAL_ADMIN"
+      POSTGRES_PASSWORD: "CAR_RENTAL_LOCAL"
 
   carrental_sonarqube:
     container_name: carrental_sonarqube
