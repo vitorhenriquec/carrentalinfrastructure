@@ -10,6 +10,7 @@
 	</parent>
 	<groupId>com.github.vitorhenriquec</groupId>
 	<artifactId>carrentalinfrastructure</artifactId>
+	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>carrental</name>
 	<description>An infrastructure project for a car rental provider</description>
