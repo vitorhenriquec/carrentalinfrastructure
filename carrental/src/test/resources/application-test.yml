@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:carrental
+    username: CAR_RENTAL_ADMIN
+    password: CAR_RENTAL_LOCAL
+  jpa:
+    database-plataform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  flyway:
+    enabled: true
+    url: jdbc:h2:mem:carrental
+    schemas: public
+    user: "CAR_RENTAL_ADMIN"
+    password: "CAR_RENTAL_LOCAL"

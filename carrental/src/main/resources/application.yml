@@ -1,9 +1,11 @@
 spring:
+  application:
+    name: carrental
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/postgres
-    username: CAR_RENTAL_ACCOUNTING_ADMIN
-    password: CAR_RENTAL_ACCOUNTING_LOCAL
+    username: CAR_RENTAL_ADMIN
+    password: CAR_RENTAL_LOCAL
   jpa:
     database: POSTGRESQL
     hibernate:
@@ -11,3 +13,16 @@ spring:
     open-in-view: false
   database:
     driverClassName: org.postgresql.Driver
+  flyway:
+    enabled: true
+  url: jdbc:postgresql://localhost:5432/postgres
+  schemas: public
+  user: "CAR_RENTAL_ADMIN"
+  password: "CAR_RENTAL_LOCAL"
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
+server:
+  port: 8081
