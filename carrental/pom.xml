@@ -10,7 +10,6 @@
 	</parent>
 	<groupId>com.github.vitorhenriquec</groupId>
 	<artifactId>carrental</artifactId>
-	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>carrental</name>
 	<description>A service for a car rental </description>
@@ -50,11 +49,6 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

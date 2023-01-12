@@ -3,8 +3,10 @@ package com.github.vitorhenriquec.carrental.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.vitorhenriquec.carrental.CarrentalApplication;
 import com.github.vitorhenriquec.carrental.configuration.ObjectMapperConfig;
+import com.github.vitorhenriquec.carrental.model.Car;
 import com.github.vitorhenriquec.carrental.repository.CarRepository;
 import com.github.vitorhenriquec.carrental.request.CarSaveRequest;
+import com.github.vitorhenriquec.carrental.request.CarUpdateRequest;
 import static org.hamcrest.CoreMatchers.equalTo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -56,12 +59,46 @@ public class CarRentalControllerTest {
                         .content(objectMapper.writeValueAsString(carSaveRequest))
         )
                 .andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(
                         jsonPath("brand", equalTo(carSaveRequest.getBrand()))
                 ).andExpect(
                         jsonPath("model", equalTo(carSaveRequest.getModel()))
                 );
+
+    }
+
+    @Test
+    @DisplayName("Should update an existing car successfully")
+    public void shouldUpdateCarSucessufully() throws Exception {
+        final var carUpdateRequest = new CarUpdateRequest("brand1", "model1", true);
+
+        carRepository.save(new Car(1L, "brand", "model", false));
+
+        mockMvc.perform(
+                        put(path + "/1")
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(objectMapper.writeValueAsString(carUpdateRequest))
+                )
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    @DisplayName("Should not update a non existing car")
+    public void shouldNotUpdateCar() throws Exception {
+        final var carUpdateRequest = new CarUpdateRequest("brand1", "model1", true);
+
+        mockMvc.perform(
+                        put(path + "/1")
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(objectMapper.writeValueAsString(carUpdateRequest))
+                )
+                .andDo(print())
+                .andExpect(status().isNotFound());
 
     }
 

@@ -1,9 +1,12 @@
 package com.github.vitorhenriquec.carrental.controller;
 
+import com.github.vitorhenriquec.carrental.exception.CarNotFoundException;
 import com.github.vitorhenriquec.carrental.request.CarSaveRequest;
+import com.github.vitorhenriquec.carrental.request.CarUpdateRequest;
 import com.github.vitorhenriquec.carrental.response.CarSaveResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
@@ -17,5 +20,12 @@ public interface CarRentalController {
     ResponseEntity<CarSaveResponse> saveCar(
             @Parameter(name="body", required = true, description = "Car data to be saved") CarSaveRequest carSaveRequest
     );
+
+    @Operation(description = "Update a new car")
+    void updateCar(
+            @Parameter(in = ParameterIn.PATH, description = "Car id") Long carId,
+            @Parameter(name="body", required = true, description = "Car data to be updated") CarUpdateRequest carUpdateRequest
+    ) throws CarNotFoundException;
+
 
 }
