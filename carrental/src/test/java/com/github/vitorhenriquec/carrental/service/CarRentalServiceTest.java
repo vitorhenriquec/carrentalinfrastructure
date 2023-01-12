@@ -24,7 +24,7 @@ public class CarRentalServiceTest {
     private CarRepository carRepository;
 
     @Autowired
-    private CarRentalService carService;
+    private CarRentalServiceImpl carService;
 
 
     @Test
@@ -32,12 +32,15 @@ public class CarRentalServiceTest {
     public void shoudlSaveCar() {
         final var carSaveRequest = new CarSaveRequest("brand", "model");
 
-        final var car = Assertions.assertDoesNotThrow(
+        final var carSaveResponse = Assertions.assertDoesNotThrow(
                 ()  -> {
                     return carService.saveCard(carSaveRequest);
                 }
         );
 
         verify(carRepository, times(1)).save(any());
+
+        Assertions.assertEquals(carSaveResponse.getBrand(), "brand");
+        Assertions.assertEquals(carSaveResponse.getModel(), "model");
     }
 }
