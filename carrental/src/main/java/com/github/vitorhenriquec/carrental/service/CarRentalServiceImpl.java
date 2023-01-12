@@ -46,6 +46,7 @@ public class CarRentalServiceImpl implements CarRentalService {
 
         carFound.setBrand(carUpdateRequest.getBrand());
         carFound.setModel(carUpdateRequest.getModel());
+        carFound.setAvailable(carUpdateRequest.getAvailable());
 
         carRepository.save(carFound);
     }

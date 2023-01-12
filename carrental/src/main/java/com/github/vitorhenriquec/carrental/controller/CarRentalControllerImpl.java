@@ -36,7 +36,7 @@ public class CarRentalControllerImpl implements CarRentalController {
     }
 
     @Override
-    @PutMapping("/{carId}", consumes="application/json")
+    @PutMapping(value = "/{carId}", consumes="application/json")
     public void updateCar(
             @PathVariable Long carId,
             @RequestBody CarUpdateRequest carUpdateRequest
