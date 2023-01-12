@@ -96,4 +96,43 @@ public class CarRentalServiceTest {
         verify(carRepository, times(1)).findById(any());
         verify(carRepository, times(0)).save(any());
     }
+
+    @Test
+    @DisplayName("Should delete an existing car")
+    public void shoudlDeleteAnExistingCar() {
+
+        when(carRepository.findById(1L)).thenReturn(Optional.of(new Car(
+                1L,
+                "brand",
+                "model",
+                Boolean.FALSE
+        )));
+
+        Assertions.assertDoesNotThrow(
+                ()  -> {
+                    carService.deleteCar(1L);
+                }
+        );
+
+        verify(carRepository, times(1)).findById(any());
+        verify(carRepository, times(1)).delete(any());
+    }
+
+    @Test
+    @DisplayName("Should not delete a non existing car")
+    public void shoudlNotDeleteCar() {
+
+        when(carRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(
+                CarNotFoundException.class,
+                ()  -> {
+                    carService.deleteCar(1L);
+                }
+        );
+
+        verify(carRepository, times(1)).findById(any());
+        verify(carRepository, times(0)).delete(any());
+    }
+
 }

@@ -50,4 +50,9 @@ public class CarRentalServiceImpl implements CarRentalService {
 
         carRepository.save(carFound);
     }
+
+    @Override
+    public void deleteCar(long carId) {
+
+    }
 }
