@@ -20,12 +20,16 @@ public class CarRentalServiceImpl implements CarRentalService {
     public CarSaveResponse saveCard(CarSaveRequest carSaveRequest) {
         log.info("method={}, carSaveRequest={}", "saveCar", carSaveRequest);
 
-        final var car = Car.builder().model(
-                carSaveRequest.getModel()).brand(carSaveRequest.getBrand()
-        ).build();
+        var car = new Car();
+        car.setModel(carSaveRequest.getModel());
+        car.setBrand(carSaveRequest.getBrand());
 
         final var carSaved = carRepository.save(car);
 
-        return CarSaveResponse.builder().id(carSaved.getId()).build();
+        return CarSaveResponse.builder()
+                .id(carSaved.getId())
+                .brand(carSaved.getBrand())
+                .model(carSaved.getModel())
+                .build();
     }
 }

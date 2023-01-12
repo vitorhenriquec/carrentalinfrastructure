@@ -9,10 +9,17 @@ spring:
   jpa:
     database: POSTGRESQL
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     open-in-view: false
   database:
     driverClassName: org.postgresql.Driver
+  flyway:
+    enabled: true
+  url: jdbc:postgresql://localhost:5432/postgres
+  schemas: public
+  user: "CAR_RENTAL_ADMIN"
+  password: "CAR_RENTAL_LOCAL"
+
 
 server:
   port: 8081
