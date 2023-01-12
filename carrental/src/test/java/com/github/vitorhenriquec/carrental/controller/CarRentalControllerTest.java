@@ -56,7 +56,7 @@ public class CarRentalControllerTest {
                         .content(objectMapper.writeValueAsString(carSaveRequest))
         )
                 .andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(
                         jsonPath("brand", equalTo(carSaveRequest.getBrand()))
                 ).andExpect(
