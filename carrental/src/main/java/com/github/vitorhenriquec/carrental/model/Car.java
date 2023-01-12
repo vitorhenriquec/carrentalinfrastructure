@@ -1,7 +1,19 @@
 package com.github.vitorhenriquec.carrental.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "car")
@@ -14,7 +26,8 @@ import lombok.*;
 public class Car {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "car_gen")
+    @SequenceGenerator(name="car_gen", sequenceName = "sq_car_id", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -24,6 +37,6 @@ public class Car {
     @Column(name = "model", nullable = false)
     private String model;
 
-    @Column(name = "brand", nullable = false)
-    private Boolean available;
+    @Column(name = "available", nullable = false)
+    private Boolean available = Boolean.FALSE;
 }
