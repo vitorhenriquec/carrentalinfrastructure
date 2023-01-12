@@ -15,7 +15,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      pflege_accounting_network:
+      carrental_network:
         ipv4_address: 145.0.0.2
     environment:
       POSTGRES_USER: "CAR_RENTAL_ADMIN"

@@ -19,6 +19,9 @@ spring:
   schemas: public
   user: "CAR_RENTAL_ADMIN"
   password: "CAR_RENTAL_LOCAL"
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 
 server:
