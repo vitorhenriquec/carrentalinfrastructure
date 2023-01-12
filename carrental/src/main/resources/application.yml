@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: CAR_RENTAL_ACCOUNTING_ADMIN
+    password: CAR_RENTAL_ACCOUNTING_LOCAL
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+  database:
+    driverClassName: org.postgresql.Driver
