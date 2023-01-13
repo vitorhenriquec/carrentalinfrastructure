@@ -4,7 +4,6 @@ import com.github.vitorhenriquec.carrental.model.Car;
 import com.github.vitorhenriquec.carrental.repository.CarRepository;
 import static java.util.Map.entry;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,7 +48,7 @@ public class SearchColumnServiceTest {
     private Map<String, String> mapColumnToValue;
 
     @BeforeEach
-    public void initializeRepository() {
+    public void initializeProperties() {
         cars = List.of(
                 new Car(1l, brand, model, true),
                 new Car(2l, brand, model, true)
