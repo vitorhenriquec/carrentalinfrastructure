@@ -52,8 +52,8 @@ public class CarRentalServiceImpl implements CarRentalService {
     }
 
     @Override
-    public void deleteCar(long carId) throws CarNotFoundException {
-        log.info("method={}; carId={}", "updateCar", carId);
+    public void deleteCar(Long carId) throws CarNotFoundException {
+        log.info("method={}; carId={}", "deleteCar", carId);
         var carFound = carRepository.findById(carId)
                 .orElseThrow(CarNotFoundException::new);
 
