@@ -79,10 +79,10 @@ public class CarRentalControllerTest {
     public void shouldUpdateCarSucessufully() throws Exception {
         final var carUpdateRequest = new CarUpdateRequest("brand1", "model1", true);
 
-        carRepository.save(new Car(1L, "brand", "model", false));
+        final var carSalved = carRepository.save(new Car(1L, "brand", "model", false));
 
         mockMvc.perform(
-                        put(path + "/1")
+                        put(path + "/"+ carSalved.getId().toString())
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                                 .content(objectMapper.writeValueAsString(carUpdateRequest))
@@ -111,15 +111,13 @@ public class CarRentalControllerTest {
 
     @Test
     @DisplayName("Should delete an existing car successfully")
-    @SqlGroup(value = {
-            @Sql(value = "classpath:scripts/insert_car_record.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-        }
-    )
     public void shouldDeleteCarSucessufully() throws Exception {
         final var carUpdateRequest = new CarUpdateRequest("brand1", "model1", true);
 
+        final var carSalved = carRepository.save(new Car(1L, "brand", "model", false));
+
         mockMvc.perform(
-                        delete(path + "/1")
+                        delete(path + "/" + carSalved.getId().toString())
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                                 .content(objectMapper.writeValueAsString(carUpdateRequest))
                 )
