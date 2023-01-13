@@ -1,6 +1,7 @@
 package com.github.vitorhenriquec.carrental.service;
 
 import com.github.vitorhenriquec.carrental.exception.CarNotFoundException;
+import com.github.vitorhenriquec.carrental.factory.SearchFactory;
 import com.github.vitorhenriquec.carrental.model.Car;
 import com.github.vitorhenriquec.carrental.repository.CarRepository;
 import com.github.vitorhenriquec.carrental.request.CarSaveRequest;
@@ -8,10 +9,9 @@ import com.github.vitorhenriquec.carrental.request.CarUpdateRequest;
 import com.github.vitorhenriquec.carrental.response.CarSaveResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @Log4j2
@@ -52,8 +52,8 @@ public class CarRentalServiceImpl implements CarRentalService {
     }
 
     @Override
-    public void deleteCar(long carId) throws CarNotFoundException {
-        log.info("method={}; carId={}", "updateCar", carId);
+    public void deleteCar(Long carId) throws CarNotFoundException {
+        log.info("method={}; carId={}", "deleteCar", carId);
         var carFound = carRepository.findById(carId)
                 .orElseThrow(CarNotFoundException::new);
 

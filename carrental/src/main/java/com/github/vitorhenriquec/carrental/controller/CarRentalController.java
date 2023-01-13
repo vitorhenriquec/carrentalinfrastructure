@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(
         name= "Car Rental",
@@ -31,4 +33,11 @@ public interface CarRentalController {
     void deleteCar(
             @Parameter(in = ParameterIn.PATH, description = "Car id") Long carId
     ) throws CarNotFoundException;
+
+    @Operation(description = "Find car by a specific column and its value")
+    ResponseEntity<?> findAvailableBy(
+            @Parameter(in = ParameterIn.HEADER, description = "Car column for the search") String column,
+            @Parameter(in = ParameterIn.HEADER, description = "Car column's value") String value,
+            Pageable pageable
+    );
 }
