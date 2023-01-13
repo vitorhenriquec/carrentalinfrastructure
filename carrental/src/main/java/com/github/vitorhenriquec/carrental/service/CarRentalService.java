@@ -10,4 +10,6 @@ public interface CarRentalService {
     CarSaveResponse saveCard(CarSaveRequest carSaveRequest);
 
     void updateCar(Long carId, CarUpdateRequest carUpdateRequest) throws CarNotFoundException;
+
+    void deleteCar(long carId) throws CarNotFoundException;
 }

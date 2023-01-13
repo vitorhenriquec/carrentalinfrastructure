@@ -23,6 +23,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -96,6 +97,35 @@ public class CarRentalControllerTest {
                                 .accept(MediaType.APPLICATION_JSON_VALUE)
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                                 .content(objectMapper.writeValueAsString(carUpdateRequest))
+                )
+                .andDo(print())
+                .andExpect(status().isNotFound());
+
+    }
+
+
+    @Test
+    @DisplayName("Should delete an existing car successfully")
+    public void shouldDeleteCarSucessufully() throws Exception {
+        final var carUpdateRequest = new CarUpdateRequest("brand1", "model1", true);
+
+        carRepository.save(new Car(1L, "brand", "model", false));
+
+        mockMvc.perform(
+                        delete(path + "/1")
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                                .content(objectMapper.writeValueAsString(carUpdateRequest))
+                )
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    @DisplayName("Should not delete a non existing car")
+    public void shouldNotDeleteCar() throws Exception {
+        mockMvc.perform(
+                        delete(path + "/1")
                 )
                 .andDo(print())
                 .andExpect(status().isNotFound());

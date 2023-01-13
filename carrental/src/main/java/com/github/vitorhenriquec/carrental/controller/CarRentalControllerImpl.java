@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -41,7 +42,15 @@ public class CarRentalControllerImpl implements CarRentalController {
             @PathVariable Long carId,
             @RequestBody CarUpdateRequest carUpdateRequest
     ) throws CarNotFoundException {
+        log.info("method={};", "updateCar");
         carRentalService.updateCar(carId, carUpdateRequest);
+    }
+
+    @Override
+    @DeleteMapping(value = "/{carId}")
+    public void deleteCar(@PathVariable Long carId) throws CarNotFoundException {
+        log.info("method={};", "deleteCar");
+        carRentalService.deleteCar(carId);
     }
 
 }
