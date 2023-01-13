@@ -21,11 +21,14 @@ public interface CarRentalController {
             @Parameter(name="body", required = true, description = "Car data to be saved") CarSaveRequest carSaveRequest
     );
 
-    @Operation(description = "Update a new car")
+    @Operation(description = "Update a car")
     void updateCar(
             @Parameter(in = ParameterIn.PATH, description = "Car id") Long carId,
             @Parameter(name="body", required = true, description = "Car data to be updated") CarUpdateRequest carUpdateRequest
     ) throws CarNotFoundException;
 
-
+    @Operation(description = "Delete a car")
+    void deleteCar(
+            @Parameter(in = ParameterIn.PATH, description = "Car id") Long carId
+    ) throws CarNotFoundException;
 }

@@ -11,5 +11,5 @@ public interface CarRentalService {
 
     void updateCar(Long carId, CarUpdateRequest carUpdateRequest) throws CarNotFoundException;
 
-    void deleteCar(long carId);
+    void deleteCar(long carId) throws CarNotFoundException;
 }
