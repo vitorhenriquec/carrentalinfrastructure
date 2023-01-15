@@ -3,7 +3,6 @@ package com.github.vitorhenriquec.carrental.controller;
 import com.github.vitorhenriquec.carrental.exception.UserAlreadyExistsException;
 import com.github.vitorhenriquec.carrental.request.UserSignUpRequest;
 import com.github.vitorhenriquec.carrental.service.UserServiceImpl;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;

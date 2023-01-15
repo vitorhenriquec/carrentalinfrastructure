@@ -6,19 +6,17 @@ import com.github.vitorhenriquec.carrental.security.AuthenticationFilter;
 import com.github.vitorhenriquec.carrental.security.AuthorizationFilter;
 import com.github.vitorhenriquec.carrental.security.JwtUtil;
 import com.github.vitorhenriquec.carrental.service.UserDetailsCustomService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -26,15 +24,16 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserRepository userRepository;
-
-    private final UserDetailsCustomService userDetailsCustomService;
 
     private final ObjectMapper objectMapper;
 
     private final JwtUtil jwtUtil;
+
+    private final UserDetailsCustomService userDetailsCustomService;
+
 
     private final String[] whiteList = {
             "/v2/api-docs",
@@ -53,17 +52,26 @@ public class SecurityConfig {
             "/v1/user"
     };
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
-        http.authorizeRequests().antMatchers(HttpMethod.POST, postWhiteList).permitAll()
-                .anyRequest().authenticated();
-        http.addFilter(new AuthenticationFilter(userRepository, objectMapper, authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), jwtUtil));
-        http.addFilter(new AuthorizationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), userDetailsCustomService, jwtUtil));
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-
-        return http.build();
+        http.authorizeRequests(
+                auth -> {
+                    auth.antMatchers(HttpMethod.POST, postWhiteList).permitAll();
+                }
+        );
+        http.authorizeRequests(
+                auth -> {
+                    auth.anyRequest().authenticated();
+                }
+        );
+        http.addFilter(new AuthenticationFilter(authenticationManager(), userRepository, objectMapper, jwtUtil));
+        http.addFilter(new AuthorizationFilter(authenticationManager(), userDetailsCustomService, jwtUtil));
+        http.sessionManagement(
+                sessionManagement -> {
+                    sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                }
+        );
     }
 
     @Bean
@@ -78,20 +86,20 @@ public class SecurityConfig {
 
         config.setAllowCredentials(true);
         config.addAllowedOrigin("*");
-        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
 
         return new CorsFilter(source);
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers(whiteList);
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers(whiteList);
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsCustomService).passwordEncoder(bcryptPasswordEncoder());
     }
 }

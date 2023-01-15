@@ -19,7 +19,7 @@ public class UserCustomDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(
-                new SimpleGrantedAuthority("DEFAULT")
+                new SimpleGrantedAuthority("ROLE_USER")
         );
     }
 

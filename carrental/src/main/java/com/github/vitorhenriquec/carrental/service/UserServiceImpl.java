@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
         var user = new User();
 
         user.setEmail(request.getEmail());
-        user.setPassword(passwordService.encode(user.getPassword()));
+        user.setPassword(passwordService.encode(request.getPassword()));
 
         userRepository.save(user);
     }

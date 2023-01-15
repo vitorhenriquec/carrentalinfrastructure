@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.vitorhenriquec.carrental.exception.UserNotFoundException;
 import com.github.vitorhenriquec.carrental.repository.UserRepository;
 import com.github.vitorhenriquec.carrental.request.LoginRequest;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,23 +21,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Log4j2
+@RequiredArgsConstructor
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private final AuthenticationManager authenticationManager;
 
     private final UserRepository userRepository;
 
     private final ObjectMapper objectMapper;
 
-    private final AuthenticationManager authenticationManager;
-
     private final JwtUtil jwtUtil;
 
-    public AuthenticationFilter(UserRepository userRepository, ObjectMapper objectMapper, AuthenticationManager authenticationManager, JwtUtil jwtUtil){
-        super(authenticationManager);
-        this.userRepository = userRepository;
-        this.objectMapper = objectMapper;
-        this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
-    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {

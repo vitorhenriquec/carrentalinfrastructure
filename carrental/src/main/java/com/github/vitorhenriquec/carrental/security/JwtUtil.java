@@ -18,7 +18,7 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    @Value("${jwt.expiration}")
+    @Value("${jwt.secret}")
     private String secret;
 
     public String generateToken(String email) {
@@ -40,7 +40,7 @@ public class JwtUtil {
     public Claims getClaims(String token) throws AuthenticationException {
         log.info("method={}", "getClaims");
         try {
-           return Jwts.parser().setSigningKey(secret.getBytes(StandardCharsets.UTF_8)).parseClaimsJwt(token).getBody();
+           return (Claims) Jwts.parser().setSigningKey(secret.getBytes(StandardCharsets.UTF_8)).parse(token).getBody();
         } catch (Exception ex) {
             throw new AuthenticationException();
         }
