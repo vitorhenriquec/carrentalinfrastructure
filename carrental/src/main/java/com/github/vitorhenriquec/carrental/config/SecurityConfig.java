@@ -7,21 +7,20 @@ import com.github.vitorhenriquec.carrental.security.AuthorizationFilter;
 import com.github.vitorhenriquec.carrental.security.JwtUtil;
 import com.github.vitorhenriquec.carrental.service.UserDetailsCustomService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpMethod;
-import org.springframework.web.filter.CorsFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -32,38 +31,34 @@ public class SecurityConfig {
 
     private final UserDetailsCustomService userDetailsCustomService;
 
-    private final AuthenticationManager authenticationManager;
-
     private final ObjectMapper objectMapper;
 
     private final JwtUtil jwtUtil;
 
-    private final List<String> whiteList = Arrays.asList(
+    private final String[] whiteList = {
             "/v2/api-docs",
             "/swagger-resources",
             "/swagger-resources/**",
             "/configuration/ui",
             "/configuration/security",
             "/swagger-ui.html",
-            "/webjars/**",  // -- Swagger UI v3 (OpenAPI)
+            "/webjars/**",
             "/v3/api-docs/**",
             "/swagger-ui/**"
-    );
+    };
 
 
-    private final List<String> postWhiteList = Arrays.asList(
+    private final String[] postWhiteList = {
             "/v1/user"
-    );
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
-        http.authorizeRequests().antMatchers(String.valueOf(whiteList)).permitAll()
-                .antMatchers(HttpMethod.POST, String.valueOf(postWhiteList)).permitAll()
-                .and();
-        http.authorizeRequests().anyRequest().authenticated();
-        http.addFilter(new AuthenticationFilter(userRepository, objectMapper, authenticationManager));
-        http.addFilter(new AuthorizationFilter(authenticationManager, userDetailsCustomService, jwtUtil));
+        http.authorizeRequests().antMatchers(HttpMethod.POST, postWhiteList).permitAll()
+                .anyRequest().authenticated();
+        http.addFilter(new AuthenticationFilter(userRepository, objectMapper, authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), jwtUtil));
+        http.addFilter(new AuthorizationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), userDetailsCustomService, jwtUtil));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 
@@ -87,5 +82,15 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
 
         return new CorsFilter(source);
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().antMatchers(whiteList);
     }
 }

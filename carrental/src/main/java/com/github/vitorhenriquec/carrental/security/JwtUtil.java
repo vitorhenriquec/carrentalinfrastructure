@@ -15,10 +15,10 @@ import java.util.Date;
 @Log4j2
 public class JwtUtil {
 
-    @Value("{jwt.expiration}")
+    @Value("${jwt.expiration}")
     private Long expiration;
 
-    @Value("{jwt.expiration}")
+    @Value("${jwt.expiration}")
     private String secret;
 
     public String generateToken(String email) {

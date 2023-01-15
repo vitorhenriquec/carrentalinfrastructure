@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @Tag(
         name= "Car Rental",
@@ -18,17 +19,20 @@ public interface CarRentalController {
 
     @Operation(description = "Save a new car")
     ResponseEntity<CarSaveResponse> saveCar(
-            @Parameter(name="body", required = true, description = "Car data to be saved") CarSaveRequest carSaveRequest
+            @Parameter(name="body", required = true, description = "Car data to be saved") CarSaveRequest carSaveRequest,
+            @Parameter(in = ParameterIn.HEADER, name="authorization") String authorization
     );
 
     @Operation(description = "Update a car")
     void updateCar(
             @Parameter(in = ParameterIn.PATH, description = "Car id") Long carId,
-            @Parameter(name="body", required = true, description = "Car data to be updated") CarUpdateRequest carUpdateRequest
+            @Parameter(name="body", required = true, description = "Car data to be updated") CarUpdateRequest carUpdateRequest,
+            @Parameter(in = ParameterIn.HEADER, name="authorization") String authorization
     ) throws CarNotFoundException;
 
     @Operation(description = "Delete a car")
     void deleteCar(
-            @Parameter(in = ParameterIn.PATH, description = "Car id") Long carId
+            @Parameter(in = ParameterIn.PATH, description = "Car id") Long carId,
+            @Parameter(in = ParameterIn.HEADER, name="authorization") String authorization
     ) throws CarNotFoundException;
 }

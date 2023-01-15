@@ -25,8 +25,8 @@ public class ControllerExceptionHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = {Exception.class})
-    public void handleGenericException() {
-        log.error("method={};", "handleGenericException");
+    public void handleGenericException(Exception exception) {
+        log.error("method={}; message={}; exceptionClass={};", "handleGenericException", exception.getMessage(), exception.getClass());
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
