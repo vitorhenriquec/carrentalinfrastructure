@@ -23,7 +23,7 @@ public class CarRentalServiceImpl implements CarRentalService {
 
 
     @Override
-    public CarSaveResponse saveCard(CarSaveRequest carSaveRequest) {
+    public CarSaveResponse saveCar(CarSaveRequest carSaveRequest) {
         log.info("method={}; carSaveRequest={}", "saveCar", carSaveRequest);
 
         var car = new Car();

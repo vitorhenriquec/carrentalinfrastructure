@@ -6,7 +6,6 @@ import com.github.vitorhenriquec.carrental.request.CarSaveRequest;
 import com.github.vitorhenriquec.carrental.request.CarUpdateRequest;
 import com.github.vitorhenriquec.carrental.response.CarSaveResponse;
 import com.github.vitorhenriquec.carrental.service.CarRentalService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Pageable;
@@ -39,20 +38,18 @@ public class CarRentalControllerImpl implements CarRentalController {
     @Override
     @PostMapping(consumes="application/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CarSaveResponse> saveCar(
-            @RequestBody CarSaveRequest carSaveRequest,
-            @RequestHeader("Authorization") String authorization
+            @RequestBody CarSaveRequest carSaveRequest
     ) {
         log.info("method={};", "saveCar");
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(carRentalService.saveCard(carSaveRequest));
+                .body(carRentalService.saveCar(carSaveRequest));
     }
 
     @Override
     @PutMapping(value = "/{carId}", consumes=MediaType.APPLICATION_JSON_VALUE)
     public void updateCar(
             @PathVariable Long carId,
-            @RequestBody CarUpdateRequest carUpdateRequest,
-            @RequestHeader("Authorization") String authorization
+            @RequestBody CarUpdateRequest carUpdateRequest
     ) throws CarNotFoundException {
         log.info("method={};", "updateCar");
         carRentalService.updateCar(carId, carUpdateRequest);
@@ -61,8 +58,7 @@ public class CarRentalControllerImpl implements CarRentalController {
     @Override
     @DeleteMapping(value = "/{carId}")
     public void deleteCar(
-            @PathVariable Long carId,
-            @RequestHeader("Authorization") String authorization
+            @PathVariable Long carId
     ) throws CarNotFoundException {
         log.info("method={};", "deleteCar");
         carRentalService.deleteCar(carId);

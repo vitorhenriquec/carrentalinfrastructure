@@ -47,7 +47,7 @@ public class CarRentalServiceTest {
 
         final var carSaveResponse = Assertions.assertDoesNotThrow(
                 ()  -> {
-                    return carService.saveCard(carSaveRequest);
+                    return carService.saveCar(carSaveRequest);
                 }
         );
 
