@@ -20,3 +20,7 @@ spring:
     schemas: public
     user: "CAR_RENTAL_ADMIN"
     password: "CAR_RENTAL_LOCAL"
+
+jwt:
+  expiration: 28800000
+  secret: d0f96f47-cdcf-49a4-8cbf-0465d247871d

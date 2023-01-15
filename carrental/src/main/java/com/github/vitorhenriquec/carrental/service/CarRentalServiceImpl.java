@@ -8,6 +8,7 @@ import com.github.vitorhenriquec.carrental.request.CarSaveRequest;
 import com.github.vitorhenriquec.carrental.request.CarUpdateRequest;
 import com.github.vitorhenriquec.carrental.response.CarSaveResponse;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Log4j2
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CarRentalServiceImpl implements CarRentalService {
 
     private final CarRepository carRepository;
