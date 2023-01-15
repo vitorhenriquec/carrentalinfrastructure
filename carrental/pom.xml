@@ -23,6 +23,8 @@
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
 		<sonar.login>admin</sonar.login>
 		<sonar.password>123456</sonar.password>
+		<sonar.projectKey>carrental</sonar.projectKey>
+		<sonar.coverage.exclusions>**/config/**, **/handler/**, **/exception/**, **/request/**, **/response/**, **/model/**, **/security/**, **/CarrentalApplication**</sonar.coverage.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -131,6 +133,18 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<exclude>**/config/**</exclude>
+						<exclude>**/handler/**</exclude>
+						<exclude>**/exception/**</exclude>
+						<exclude>**/request/**</exclude>
+						<exclude>**/response/**</exclude>
+						<exclude>**/model/**</exclude>
+						<exclude>**/security/**</exclude>
+						<exclude>**/CarrentalApplication**</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

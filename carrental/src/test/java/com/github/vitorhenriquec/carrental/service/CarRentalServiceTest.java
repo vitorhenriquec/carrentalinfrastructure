@@ -35,7 +35,7 @@ public class CarRentalServiceTest {
 
     @Test
     @DisplayName("Should save a car")
-    public void shoudlSaveCar() {
+    public void shouldSaveCar() {
         final var carSaveRequest = new CarSaveRequest("brand", "model");
 
         when(carRepository.save(any())).thenReturn(new Car(
@@ -59,7 +59,7 @@ public class CarRentalServiceTest {
 
     @Test
     @DisplayName("Should update an existing car")
-    public void shoudlUpdateAnExistingCar() {
+    public void shouldUpdateAnExistingCar() {
         final var carUpdateRequest = new CarUpdateRequest("brand1", "model1", Boolean.TRUE);
 
         when(carRepository.findById(1L)).thenReturn(Optional.of(new Car(
@@ -81,7 +81,7 @@ public class CarRentalServiceTest {
 
     @Test
     @DisplayName("Should not update a non existing car")
-    public void shoudlNotUpdateAnExistingCar() {
+    public void shouldNotUpdateAnExistingCar() {
         final var carUpdateRequest = new CarUpdateRequest("brand1", "model1", Boolean.TRUE);
 
         when(carRepository.findById(1L)).thenReturn(Optional.empty());
@@ -99,7 +99,7 @@ public class CarRentalServiceTest {
 
     @Test
     @DisplayName("Should delete an existing car")
-    public void shoudlDeleteAnExistingCar() {
+    public void shouldDeleteAnExistingCar() {
 
         when(carRepository.findById(1L)).thenReturn(Optional.of(new Car(
                 1L,
@@ -120,7 +120,7 @@ public class CarRentalServiceTest {
 
     @Test
     @DisplayName("Should not delete a non existing car")
-    public void shoudlNotDeleteCar() {
+    public void shouldNotDeleteCar() {
 
         when(carRepository.findById(1L)).thenReturn(Optional.empty());
 

@@ -80,7 +80,7 @@ public class SearchColumnServiceTest {
     @ParameterizedTest
     @ValueSource(strings = {"brand", "model"})
     @DisplayName("Should find a page of available cars by column")
-    public void shoudlFindPageAvailableCarsByColumn(String column) {
+    public void shouldFindPageAvailableCarsByColumn(String column) {
 
         final var pageCars = Assertions.assertDoesNotThrow(
                 ()  -> {

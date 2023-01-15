@@ -1,7 +1,6 @@
 package com.github.vitorhenriquec.carrental.security;
 
 import com.github.vitorhenriquec.carrental.model.User;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
