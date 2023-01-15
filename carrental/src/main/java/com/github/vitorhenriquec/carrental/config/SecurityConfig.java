@@ -7,6 +7,7 @@ import com.github.vitorhenriquec.carrental.security.AuthorizationFilter;
 import com.github.vitorhenriquec.carrental.security.JwtUtil;
 import com.github.vitorhenriquec.carrental.service.UserDetailsCustomService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,13 +50,22 @@ public class SecurityConfig {
             "/swagger-ui/**"
     );
 
+
+    private final List<String> postWhiteList = Arrays.asList(
+            "/v1/user"
+    );
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
-        http.authorizeRequests().antMatchers(String.valueOf(whiteList)).permitAll();
+        http.authorizeRequests().antMatchers(String.valueOf(whiteList)).permitAll()
+                .antMatchers(HttpMethod.POST, String.valueOf(postWhiteList)).permitAll()
+                .and();
+        http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new AuthenticationFilter(userRepository, objectMapper, authenticationManager));
         http.addFilter(new AuthorizationFilter(authenticationManager, userDetailsCustomService, jwtUtil));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 
         return http.build();
     }
