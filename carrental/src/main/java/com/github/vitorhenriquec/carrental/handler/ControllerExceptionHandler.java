@@ -1,6 +1,9 @@
 package com.github.vitorhenriquec.carrental.handler;
 
+import com.github.vitorhenriquec.carrental.exception.AuthenticationException;
 import com.github.vitorhenriquec.carrental.exception.CarNotFoundException;
+import com.github.vitorhenriquec.carrental.exception.UserAlreadyExistsException;
+import com.github.vitorhenriquec.carrental.exception.UserNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -24,5 +27,23 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(value = {Exception.class})
     public void handleGenericException() {
         log.error("method={};", "handleGenericException");
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(value = {UserNotFoundException.class})
+    public void handleUserNotFoundException() {
+        log.error("method={};", "handleUserNotFoundException");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = {UserAlreadyExistsException.class})
+    public void handleUserAlreadyExistsException() {
+        log.error("method={};", "handleUserAlreadyExistsException");
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(value = {AuthenticationException.class})
+    public void handleAuthenticationException() {
+        log.error("method={};", "handleAuthenticationException");
     }
 }
