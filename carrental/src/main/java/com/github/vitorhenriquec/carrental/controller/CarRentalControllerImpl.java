@@ -6,6 +6,7 @@ import com.github.vitorhenriquec.carrental.request.CarUpdateRequest;
 import com.github.vitorhenriquec.carrental.response.CarSaveResponse;
 import com.github.vitorhenriquec.carrental.service.CarRentalService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/car")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Log4j2
 public class CarRentalControllerImpl implements CarRentalController {
 

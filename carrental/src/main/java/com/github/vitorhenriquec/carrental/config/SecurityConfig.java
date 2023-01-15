@@ -7,6 +7,7 @@ import com.github.vitorhenriquec.carrental.security.AuthorizationFilter;
 import com.github.vitorhenriquec.carrental.security.JwtUtil;
 import com.github.vitorhenriquec.carrental.service.UserDetailsCustomService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -24,7 +25,7 @@ import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
 @Configuration
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final UserRepository userRepository;

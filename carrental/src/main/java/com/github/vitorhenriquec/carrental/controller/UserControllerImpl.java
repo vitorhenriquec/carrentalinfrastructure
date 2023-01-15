@@ -4,8 +4,8 @@ import com.github.vitorhenriquec.carrental.exception.UserAlreadyExistsException;
 import com.github.vitorhenriquec.carrental.request.UserSignUpRequest;
 import com.github.vitorhenriquec.carrental.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/user")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Log4j2
 public class UserControllerImpl implements UserController {
 

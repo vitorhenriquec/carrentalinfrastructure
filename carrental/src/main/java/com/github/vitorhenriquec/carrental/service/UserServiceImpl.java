@@ -5,11 +5,12 @@ import com.github.vitorhenriquec.carrental.model.User;
 import com.github.vitorhenriquec.carrental.repository.UserRepository;
 import com.github.vitorhenriquec.carrental.request.UserSignUpRequest;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Log4j2
 public class UserServiceImpl implements UserService {
 

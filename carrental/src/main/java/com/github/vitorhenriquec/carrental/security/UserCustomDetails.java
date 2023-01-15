@@ -2,6 +2,7 @@ package com.github.vitorhenriquec.carrental.security;
 
 import com.github.vitorhenriquec.carrental.model.User;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserCustomDetails implements UserDetails {
 
     private final User user;
